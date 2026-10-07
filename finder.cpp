@@ -102,4 +102,6 @@ int main(){
 		cout<<"input name for result image: "; cin>>carry;
 		fin.output(carry);
 	}
+	cout<<"Done. Now you can close the window"; cin>>nam;
+	cout<<"closing the programm...";
 }
