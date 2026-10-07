@@ -75,8 +75,13 @@ struct Photo{
 		vector<int> sizes = str_to_vecint(sz);
 		int nw = sizes[0];
 		int nh = sizes[1];
-		for(int i=0; i<nw*nh*3; i++){nata.push_back((data[i*3]%4)*64+(data[i*3+1]%8)*8+data[i*3+2]%8);}
+		for(int i=0; i<nw*nh*3; i++){nata.push_back((data[i*4]%4)*64+(data[i*4+1]%4)*16+(data[i*4+2]%4)*4+data[i*4+3]%4);}
 		return Photo(nata, nw, nh);
+	}
+	Photo find_all(){
+		vector<uint8_t> nata;
+		for(int i=0; i<siz; i++){nata.push_back((data[i*4]%4)*64+(data[i*4+1]%4)*16+(data[i*4+2]%4)*4+data[i*4+3]%4);}
+		return Photo(nata, w, h);
 	}
 };
 
@@ -84,8 +89,17 @@ int main(){
 	string carry;
 	cout<<"input image name: "; cin>>carry;
 	Photo fot = Photo(carry);
-	cout<<"input sneaky code: "; cin>>carry;
-	Photo fin = fot.find(carry);
-	cout<<"input name for result image: "; cin>>carry;
-	fin.output(carry);
+	bool mode;
+	cout<<"0 - find an image with code, 1 - check the whole image: "; cin>>mode;
+	if(mode){
+		Photo fin = fot.find_all();
+		cout<<"input name for result image: "; cin>>carry;
+		fin.output(carry);
+	}
+	else{
+		cout<<"input sneaky code: "; cin>>carry;
+		Photo fin = fot.find(carry);
+		cout<<"input name for result image: "; cin>>carry;
+		fin.output(carry);
+	}
 }
